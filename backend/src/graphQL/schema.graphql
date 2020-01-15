@@ -1,0 +1,13 @@
+type Query {
+  info: String!
+  feed: [Link!]!
+}
+
+type Mutation {
+  post(text: String!): Link!
+}
+
+type Link {
+  id: ID!
+  text: String!
+}
