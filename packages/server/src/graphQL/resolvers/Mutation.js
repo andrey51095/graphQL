@@ -1,5 +1,6 @@
 
 const post = (parent, {description, url}) => {
+  console.log('post', 'post');
    const link = {
     id: `link-${idCount++}`,
     description,
