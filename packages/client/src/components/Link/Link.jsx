@@ -1,11 +1,14 @@
 import React from 'react'
 
-const Link = ({link: {text, id}}) => {
+import CloseTaskButton from '../CloseTaskButton';
+
+const Link = ({link: {title, id}}) => {
   console.log('id: ', id);
   return (
     <div>
       <div>
-        {text}
+        {title}
+        <CloseTaskButton id={id} />
       </div>
     </div>
   );

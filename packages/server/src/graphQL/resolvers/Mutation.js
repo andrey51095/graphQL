@@ -1,15 +1,32 @@
 
-const post = (parent, {description, url}) => {
-  console.log('post', 'post');
-   const link = {
-    id: `link-${idCount++}`,
+const createTask = async (parent, args, context, info) => {
+  const {title, description} = args;
+  const {Task} = context.schemas;
+
+  const answer = await Task.create({
+    title,
     description,
-    url,
-  };
-  links.push(link)
-  return link;
+  })
+  console.log('answer: ', answer);
+
+  return answer;
+};
+
+const updateTask = async (parent, args, context, info) => {
+  const {id, title, description} = args;
+  const {Task} = context.schemas;
+
+  const answer = await Task.findOneAndUpdate({id},{
+    title,
+    description,
+    updatedAt: Date.now(),
+  }, {upsert: true})
+  console.log('answer: ', answer);
+
+  return answer;
 };
 
 module.exports = {
-  post
+  createTask,
+  updateTask,
 };

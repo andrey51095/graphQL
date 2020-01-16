@@ -8,9 +8,10 @@ import { Query } from 'react-apollo'
 const LinkList = () => {
   const FEED_QUERY = gql`
   {
-    feed {
+    tasks {
       id
-      text
+      title
+      status
     }
   }
 `;
@@ -22,7 +23,7 @@ const LinkList = () => {
       if (loading) return <div>Fetching</div>
       if (error) return <div>Error</div>
 
-      const linksToRender = data.feed
+      const linksToRender = data.tasks
 
       return (
         <div>

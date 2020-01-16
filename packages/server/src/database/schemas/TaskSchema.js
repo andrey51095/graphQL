@@ -1,22 +1,30 @@
 const mongoose = require('mongoose');
+const shortid = require('shortid');
+
+const {TASK_STATUSES} = require('../../constants');
+
 const Schema = mongoose.Schema;
 
 const schema = {
   id: {
-    unique: true,
     type: String,
-    index: true,
+    default: shortid.generate
   },
   title: String,
   description: String,
   createdAt: {
-    type: Date,
-    default: Date.now(),
+    type: Number,
+    default: Date.now,
   },
   updatedAt: {
-    type: Date,
+    type: Number,
     default: 0,
   },
+  status: {
+    type: String,
+    default: 'open',
+    enum: TASK_STATUSES,
+  }
 };
 
 const taskSchema = new Schema(schema);

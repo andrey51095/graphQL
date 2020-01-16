@@ -1,13 +1,32 @@
 type Query {
-  info: String!
-  feed: [Link!]!
+  tasks: [Task!]!
+  taskStatuses: [String]!
 }
 
 type Mutation {
-  post(text: String!): Link!
+  createTask(
+    title: String!
+    description: String!
+  ): Task!
+  updateTask(
+    id: String!
+    title: String!
+    description: String!
+  ): Task!
+  deleteTaks(
+    id: String!
+  ):Task!
+  setTaskStatus(
+    id: String!
+    status: String!
+  ):Task!
 }
 
-type Link {
+type Task {
   id: ID!
-  text: String!
+  title: String!
+  description: String!
+  createdAt: String!
+  updatedAt: String!
+  status: String!
 }

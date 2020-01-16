@@ -6,28 +6,37 @@ import { Mutation } from 'react-apollo'
 import './App.css';
 
 const POST_MUTATION = gql`
-  mutation PostMutation($text: String!) {
-    post(text: $text) {
-      id
-      text
+  mutation createTaskMutation($title: String!, $description: String!) {
+    createTask(
+      title: $title
+      description: $description
+    ) {
+      title
+      description
     }
   }
 `
 
 const  App = () => {
-  const [text, setText] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   return (
   <div>
      <input
-      className="mb2"
-      value={text}
-      onChange={e => setText(e.target.value)}
+      value={title}
+      onChange={e => setTitle(e.target.value)}
+      type="text"
+      placeholder="A title for the link"
+    />
+    <input
+      value={description}
+      onChange={e => setDescription(e.target.value)}
       type="text"
       placeholder="A description for the link"
     />
-    <Mutation mutation={POST_MUTATION} variables={{ text }}>
-      {(postMutation) => <button onClick={postMutation}>Add new link</button>}
+    <Mutation mutation={POST_MUTATION} variables={{ title, description }}>
+      {(createTaskMutation) => <button onClick={createTaskMutation}>Add new link</button>}
     </Mutation>
 
     <LinkList />
