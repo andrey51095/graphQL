@@ -7,26 +7,36 @@ const createTask = async (parent, args, context, info) => {
     title,
     description,
   })
-  console.log('answer: ', answer);
 
   return answer;
 };
 
 const updateTask = async (parent, args, context, info) => {
-  const {id, title, description} = args;
+  const {id, title, description, status} = args;
+  console.log('args: ', args);
   const {Task} = context.schemas;
 
   const answer = await Task.findOneAndUpdate({id},{
     title,
     description,
     updatedAt: Date.now(),
+    status,
   }, {upsert: true})
-  console.log('answer: ', answer);
 
   return answer;
 };
 
+const deleteTask = async (parent, args, context, info) => {
+  const {id} = args;
+  const {Task} = context.schemas;
+
+  const answer = await Task.findOneAndDelete({id});
+
+  return answer;
+}
+
 module.exports = {
   createTask,
   updateTask,
+  deleteTask,
 };

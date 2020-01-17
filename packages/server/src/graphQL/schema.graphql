@@ -1,6 +1,8 @@
 type Query {
   tasks: [Task!]!
   taskStatuses: [String]!
+  task(id: String!): Task!
+  tasksByStatus(status: String!): [Task!]!
 }
 
 type Mutation {
@@ -11,9 +13,10 @@ type Mutation {
   updateTask(
     id: String!
     title: String!
+    status: String!
     description: String!
   ): Task!
-  deleteTaks(
+  deleteTask(
     id: String!
   ):Task!
   setTaskStatus(

@@ -1,46 +1,25 @@
 import React from 'react';
+import { Route, Router } from 'react-router';
 
-import LinkList from '../LinkList';
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
-import './App.css';
+import Main from '../../pages/Main';
+import Tasks from '../../pages/Tasks';
+import TaskDescription from '../../pages/TaskDescription';
 
-const POST_MUTATION = gql`
-  mutation createTaskMutation($title: String!, $description: String!) {
-    createTask(
-      title: $title
-      description: $description
-    ) {
-      title
-      description
-    }
-  }
-`
+import history, {mainUrl, taskUrl, tasksUrl} from '../../routing';
 
 const  App = () => {
-  const [title, setTitle] = React.useState('');
-  const [description, setDescription] = React.useState('');
 
   return (
-  <div>
-     <input
-      value={title}
-      onChange={e => setTitle(e.target.value)}
-      type="text"
-      placeholder="A title for the link"
-    />
-    <input
-      value={description}
-      onChange={e => setDescription(e.target.value)}
-      type="text"
-      placeholder="A description for the link"
-    />
-    <Mutation mutation={POST_MUTATION} variables={{ title, description }}>
-      {(createTaskMutation) => <button onClick={createTaskMutation}>Add new link</button>}
-    </Mutation>
-
-    <LinkList />
-  </div>)
+    <div>
+      <Router history={history}>
+      <Route exact path={mainUrl} component={Main}/>
+      <Route exact path={tasksUrl} component={Tasks}/>
+      <Route path={taskUrl} component={TaskDescription}/>
+    </Router>
+    <button onClick={() => history.push(mainUrl)}>main</button>
+    <button onClick={() => history.push(tasksUrl)}>tasks</button>
+      </div>
+  );
 }
 
 export default App;
