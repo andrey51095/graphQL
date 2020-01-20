@@ -35,8 +35,18 @@ const deleteTask = async (parent, args, context, info) => {
   return answer;
 }
 
+const setTaskStatus = async (parent, args, context, info) => {
+  const {id, status} = args;
+  const {Task} = context.schemas;
+
+  const answer = await Task.findOneAndUpdate({id}, {status});
+
+  return answer;
+}
+
 module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  setTaskStatus,
 };

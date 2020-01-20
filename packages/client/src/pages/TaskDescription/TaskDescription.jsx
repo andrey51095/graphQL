@@ -4,16 +4,18 @@ import pick from 'lodash/pick';
 
 import Input from '../../components/Input';
 
-import {QUERY_TASK, UPDATE_TASK_MUTATION} from '../../graphQl';
+import {QUERY_TASK, UPDATE_TASK_MUTATION, QUERY_TASKS_STATUSES} from '../../graphQl';
 
 import history from '../../routing';
 
 const TaskDescription = () => {
-  const [task, dispatch] = React.useReducer((state, {name, value}) => ({
+  const [{title, description, status, createdAt, updatedAt}, dispatch] = React.useReducer((state, {name, value}) => ({
     ...state,
     [name]: value,
   }), {});
   const [editable, setEditable] = React.useState(false);
+
+  const statuses = useQuery(QUERY_TASKS_STATUSES);
 
   const {loading, error, data = {}, refetch} = useQuery(
     QUERY_TASK,
@@ -27,35 +29,59 @@ const TaskDescription = () => {
     Object.entries(pick(data.task, ['title', 'description', 'createdAt', 'updatedAt', 'status']) || {}).forEach(([name, value]) => dispatch({name, value}))
   }, [data]);
 
-  if (loading) {
+  if (loading || statuses.loading) {
     return (<div>Loading ...</div>)
   }
 
-  if (error) {
+  if (error || statuses.error) {
     return (<div>Error!</div>)
   }
 
   const saveTask = () => {
-    console.log('task: ', task);
-    const {status, description, title} = task;
     updateTask({variables: {id: history.location.search.slice(1), status, description, title}});
     setEditable(false);
   }
+
+  const cancelSave = () => {
+    setEditable(false);
+  }
+
+  const editTask = () => {
+    setEditable(true);
+  }
+
   return (
     <div>
       TaskDescription
       <div>
-        {Object.entries(task).map(([name, value]) => (
-          <Input
-            editable={editable}
-            key={name}
-            name={name}
-            value={value}
-            dispatch={dispatch}
-          />
-        ))}
+        <Input
+          value={title}
+          name={'title'}
+          dispatch={dispatch}
+          editable={editable}
+        />
+        <Input
+          value={description}
+          name={'description'}
+          dispatch={dispatch}
+          editable={editable}
+        />
+        <Input
+          value={status}
+          name={'status'}
+          dispatch={dispatch}
+          editable={editable}
+          options={statuses.data.taskStatuses}
+        />
+        <Input value={createdAt} />
+        <Input value={updatedAt} />
       </div>
-      {editable ? <button onClick={saveTask}>Save</button> : <button onClick={() => setEditable(true)}>Edit</button>}
+      {editable
+        ? <>
+            <button onClick={saveTask}>Save</button>
+            <button onClick={cancelSave}>Cancel</button>
+          </>
+        : <button onClick={editTask}>Edit</button>}
     </div>
   );
 };

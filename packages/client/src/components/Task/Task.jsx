@@ -1,22 +1,51 @@
 import React from 'react'
 
+import assign from 'lodash/assign';
+
 import CloseTaskButton from '../CloseTaskButton';
 import history, {taskUrl} from '../../routing';
 
-import {$container, $title} from './styles';
+import {$container, $title, $disabled} from './styles';
 
-const Task = ({task}) => {
-  console.log('history: ', history);
-  const {id, title} = task || {};
+const trimText = text => {
+  if (text.length >= 12) {
+    return `${text.slice(0, 12)} ...`
+  }
+  return text;
+};
 
-  const goToTask = () => history.push(`${taskUrl}?${id}`);
+const Task = ({task, draggable = false}) => {
+  const [disabled, setDisabled] = React.useState(false);
+  const {id, title} = task;
+
+  const goToDetails = () => history.push(`${taskUrl}?${id}`);
+
+  const dragStart = e => {
+    const target = e.target;
+    e.dataTransfer.setData('task-id', id);
+    setTimeout(() => {target.style.display = 'none';}, 0)
+  };
+
+  const closeEvent = () => {
+    setDisabled(true);
+  }
+
+  const dragOver = e => {
+    e.stopPropagation();
+  }
 
   return (
-    <div style={$container}>
-      <div style={$title} onClick={goToTask}>
-        {title}
+    <div
+      style={assign({}, $container, disabled ? $disabled : {})}
+      draggable={draggable}
+      onDragStart={dragStart}
+      onDragOver={dragOver}
+    >
+      <div style={$title}>
+        {trimText(title)}
       </div>
-      <CloseTaskButton id={id} />
+      <button onClick={goToDetails}>Details</button>
+      <CloseTaskButton id={id} closeEvent={closeEvent}/>
     </div>
   );
 }

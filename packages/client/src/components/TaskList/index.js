@@ -1,1 +1,1 @@
-export {default} from './TasksListContainer';
+export {default} from './TasksList';

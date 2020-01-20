@@ -5,7 +5,11 @@ export const $container = {
   padding: '2px',
   justifyContent: 'space-between',
 };
-
+export const $disabled = {
+  pointerEvents: 'none',
+  opacity: 0.4,
+}
 export const $title = {
   userSelect: 'none',
+  width: '60%',
 };

@@ -39,3 +39,17 @@ export const UPDATE_TASK_MUTATION = gql`
       }
     }
 `;
+
+export const SET_TASK_STATUS = gql`
+  mutation setTaskStatus(
+    $id: String!
+    $status: String!
+  ) {
+    setTaskStatus(
+      id: $id
+      status: $status
+    ) {
+      id
+    }
+  }
+`;

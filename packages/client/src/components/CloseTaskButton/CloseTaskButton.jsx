@@ -3,20 +3,18 @@ import { useMutation } from '@apollo/react-hooks';
 
 import {DELETE_TASK_MUTATION} from '../../graphQl';
 
-const CloseTaskButton = ({id}) => {
+const CloseTaskButton = ({id, closeEvent}) => {
   const [task] = useMutation(DELETE_TASK_MUTATION);
-  const [clicked, setClicked] = React.useState(false);
 
   const deleteTask = () => {
     task({variables: {id}});
-    setClicked(true);
+    closeEvent();
   };
   return (
     <button
       onClick={deleteTask}
-      disabled={clicked}
     >
-      delete
+      Delete
     </button>
   )
 }
