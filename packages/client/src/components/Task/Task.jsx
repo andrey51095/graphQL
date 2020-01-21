@@ -1,51 +1,60 @@
 import React from 'react'
-
 import assign from 'lodash/assign';
+import { useMutation } from '@apollo/react-hooks';
 
-import CloseTaskButton from '../CloseTaskButton';
+import Button from '../Button';
 import history, {taskUrl} from '../../routing';
+import {shrinkTextToSize} from '../../utils';
 
-import {$container, $title, $disabled} from './styles';
+import {DELETE_TASK_MUTATION} from '../../graphQl';
 
-const trimText = text => {
-  if (text.length >= 12) {
-    return `${text.slice(0, 12)} ...`
-  }
-  return text;
-};
+import {$container, $title, $disabled, $hidden} from './styles';
 
-const Task = ({task, draggable = false}) => {
-  const [disabled, setDisabled] = React.useState(false);
+
+
+const Task = ({task, draggable = false, refetch, status}) => {
+  const [{disabled, hidden}, setStyle] = React.useReducer((state, action) => ({...state, ...action}), {disabled: false, hidden: false})
+  const [deleteTask] = useMutation(DELETE_TASK_MUTATION);
+
   const {id, title} = task;
 
   const goToDetails = () => history.push(`${taskUrl}?${id}`);
 
-  const dragStart = e => {
-    const target = e.target;
-    e.dataTransfer.setData('task-id', id);
-    setTimeout(() => {target.style.display = 'none';}, 0)
-  };
-
-  const closeEvent = () => {
-    setDisabled(true);
+  const deleteTaskEvent = async () => {
+    await deleteTask({variables: {id}})
+    setStyle({disabled: true});
+    await refetch();
   }
+  const dragStart = e => {
+    e.dataTransfer.setData('task-id', id);
+    e.dataTransfer.setData('task-status', status);
+
+    setTimeout(() => {setStyle({hidden: true});}, 0);
+  };
 
   const dragOver = e => {
     e.stopPropagation();
   }
 
+  const dragEnd = async e => {
+    e.preventDefault();
+    await refetch();
+    setStyle({hidden: false});
+  }
+
   return (
     <div
-      style={assign({}, $container, disabled ? $disabled : {})}
+      style={assign({}, $container, disabled && $disabled, hidden && $hidden)}
       draggable={draggable}
       onDragStart={dragStart}
       onDragOver={dragOver}
+      onDragEnd={dragEnd}
     >
       <div style={$title}>
-        {trimText(title)}
+        {shrinkTextToSize(title, 8)}
       </div>
-      <button onClick={goToDetails}>Details</button>
-      <CloseTaskButton id={id} closeEvent={closeEvent}/>
+      <Button title={'Details'} clickEvent={goToDetails}/>
+      <Button title={'Delete'} clickEvent={deleteTaskEvent}/>
     </div>
   );
 }

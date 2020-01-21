@@ -1,1 +1,0 @@
-export const NONE_EDITABLE = ['id', 'createdAt', 'updatedAt'];

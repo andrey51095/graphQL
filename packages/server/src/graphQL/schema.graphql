@@ -1,20 +1,20 @@
 type Query {
-  tasks: [Task!]!
-  taskStatuses: [String]!
   task(id: String!): Task!
+  taskStatuses: [TaskStatus!]!
+  tasks: [Task!]!
   tasksByStatus(status: String!): [Task!]!
 }
 
 type Mutation {
   createTask(
-    title: String!
     description: String!
+    title: String!
   ): Task!
   updateTask(
-    id: String!
-    title: String!
-    status: String!
     description: String!
+    id: String!
+    status: String!
+    title: String!
   ): Task!
   deleteTask(
     id: String!
@@ -26,10 +26,15 @@ type Mutation {
 }
 
 type Task {
-  id: ID!
-  title: String!
-  description: String!
   createdAt: String!
-  updatedAt: String!
+  description: String!
+  id: ID!
   status: String!
+  title: String!
+  updatedAt: String!
+}
+
+type TaskStatus {
+  name: String!
+  sequence: String!
 }

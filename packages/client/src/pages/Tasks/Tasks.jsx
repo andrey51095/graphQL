@@ -1,9 +1,7 @@
 import React from 'react';
-
 import { useQuery } from '@apollo/react-hooks';
 
 import Block from '../../components/Block';
-import TaskList from '../../components/TaskList';
 
 import {QUERY_TASKS_STATUSES} from '../../graphQl';
 
@@ -15,15 +13,14 @@ const  Tasks = () => {
   if (loading) return <div>Loading ...</div>
   if (error) return <div>Error :{error.message}</div>
 
+  const statuses = data.taskStatuses
+    .sort((a, b) => +a.sequence - +b.sequence)
+    .map(x => x.name);
   return (
-    <div>
-      <div style={$blocks}>
-        {data.taskStatuses && data.taskStatuses.map(status => (
-          <Block status={status} key={status}>
-            <TaskList status={status}/>
-          </Block>
-        ))}
-      </div>
+    <div style={$blocks}>
+      {data.taskStatuses && statuses.map(status => (
+        <Block status={status} key={status}/>
+      ))}
     </div>
   );
 }

@@ -1,15 +1,15 @@
 export const $container = {
-  display: 'flex',
-  flexDirection: 'column',
   backgroundColor: '#345ff9',
+  display: 'flex',
   flexBasis: '20%',
-  padding: '0.5%',
+  flexDirection: 'column',
   margin: '0.5%',
+  padding: '0.5%',
 };
 export const $title = {
+  backgroundColor: '#83b1ea',
   border: '1px solid gray',
   padding: '3px',
-  backgroundColor: '#83b1ea',
 };
 export const $navigation = {
   display: 'flex',

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const BlockHeader = ({title}) => {
-  return (
-    <div>
-      {title}
-    </div>
-  );
-};
+import {$header} from './styles';
+
+const BlockHeader = ({title}) =>  (
+  <div style={$header}>
+    {title}
+  </div>
+);
 
 export default BlockHeader;

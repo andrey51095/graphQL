@@ -1,37 +1,59 @@
-import React from 'react';
-
-import {useMutation} from '@apollo/react-hooks';
+import React, {memo} from 'react';
 import assign from 'lodash/assign';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 
-import {SET_TASK_STATUS} from '../../graphQl';
-
-import {$container, $loading} from './styles';
 import BlockHeader from '../BlockHeader';
+import TaskList from '../../components/TaskList';
 
-const Block = ({children, status}) => {
-  const [setStatus, {loading}] = useMutation(SET_TASK_STATUS);
+import {SET_TASK_STATUS, QUERY_TASKS_TITLE_BY_STATUS} from '../../graphQl';
 
-  const drop = e => {
-    e.preventDefault();
-    const id = e.dataTransfer.getData('task-id');
+import {$container} from './styles';
 
-    setStatus({variables: {id, status}});
+const Block = ({status}) => {
+  const {loading, error, data = {}, refetch} = useQuery(QUERY_TASKS_TITLE_BY_STATUS, {variables: {status}, notifyOnNetworkStatusChange: true});
+  const [setStatus] = useMutation(SET_TASK_STATUS);
+  React.useEffect(() => {refetch()}, [refetch]);
+
+  if (error) return <div>Error :{error.message}</div>
+
+  const refetchTasks = () => refetch();
+
+  const drop = event => {
+    event.preventDefault();
+    const id = event.dataTransfer.getData('task-id');
+    const draggedStatus = event.dataTransfer.getData('task-status');
+    console.log('draggedStatus: ', draggedStatus);
+    console.log('status: ', status);
+
+    if(draggedStatus !== status) {
+      console.log('=======')
+      setStatus({variables: {id, status}});
+      refetchTasks();
+    }
   };
 
-  const dragOver = e => {
-    e.preventDefault();
+  const dragOver = event => {
+    event.preventDefault();
   }
 
   return (
     <div
-      style={assign({}, $container, loading ? $loading : {})}
-      onDrop={drop}
       onDragOver={dragOver}
+      onDrop={drop}
+      style={assign({}, $container)}
     >
       <BlockHeader title={status}/>
-      {children}
+      <TaskList
+        loading={loading}
+        refetch={refetchTasks}
+        status={status}
+        tasks={data.tasksByStatus}
+      />
     </div>
   );
 };
 
-export default Block;
+export default memo((props) => {
+
+  return <Block {...props}/>
+}, (...rest) => {console.log(rest)});

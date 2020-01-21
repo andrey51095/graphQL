@@ -22,8 +22,8 @@ const schema = {
   },
   status: {
     type: String,
-    default: 'open',
-    enum: TASK_STATUSES,
+    default: 'backlog',
+    enum: TASK_STATUSES.map(x => x.name),
   }
 };
 

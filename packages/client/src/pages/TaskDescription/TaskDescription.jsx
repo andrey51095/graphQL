@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import pick from 'lodash/pick';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 import {QUERY_TASK, UPDATE_TASK_MUTATION, QUERY_TASKS_STATUSES} from '../../graphQl';
 
@@ -29,13 +30,8 @@ const TaskDescription = () => {
     Object.entries(pick(data.task, ['title', 'description', 'createdAt', 'updatedAt', 'status']) || {}).forEach(([name, value]) => dispatch({name, value}))
   }, [data]);
 
-  if (loading || statuses.loading) {
-    return (<div>Loading ...</div>)
-  }
-
-  if (error || statuses.error) {
-    return (<div>Error!</div>)
-  }
+  if (loading || statuses.loading) {return (<div>Loading ...</div>)}
+  if (error || statuses.error) {return (<div>Error!</div>)}
 
   const saveTask = () => {
     updateTask({variables: {id: history.location.search.slice(1), status, description, title}});
@@ -71,17 +67,16 @@ const TaskDescription = () => {
           name={'status'}
           dispatch={dispatch}
           editable={editable}
-          options={statuses.data.taskStatuses}
         />
         <Input value={createdAt} />
         <Input value={updatedAt} />
       </div>
       {editable
         ? <>
-            <button onClick={saveTask}>Save</button>
-            <button onClick={cancelSave}>Cancel</button>
+            <Button title={'Save'} clickEvent={saveTask}/>
+            <Button title={'Cancel'} clickEvent={cancelSave}/>
           </>
-        : <button onClick={editTask}>Edit</button>}
+        :<Button title={'Edit'} clickEvent={editTask}/>}
     </div>
   );
 };

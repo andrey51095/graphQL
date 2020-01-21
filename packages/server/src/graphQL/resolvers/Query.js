@@ -19,7 +19,6 @@ const tasksByStatus = async (parent, args, context, info) => {
   const {Task} = context.schemas;
 
   const tasks = await Task.find({status});
-  console.log('tasks: ', tasks);
 
   return tasks;
 };
@@ -27,8 +26,8 @@ const tasksByStatus = async (parent, args, context, info) => {
 const taskStatuses = () => TASK_STATUSES;
 
 module.exports = {
+  task,
   taskStatuses,
   tasks: getTasks,
-  task,
   tasksByStatus,
 };

@@ -33,7 +33,10 @@ query TaskByStatus($status: String!){
 
 export const QUERY_TASKS_STATUSES = gql`
   {
-    taskStatuses
+    taskStatuses {
+      name
+      sequence
+    }
   }
 `;
 

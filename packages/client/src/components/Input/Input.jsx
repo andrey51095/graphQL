@@ -5,40 +5,40 @@ import {darkBorder, $input, $select, $item} from './styles';
 
 const Input = ({
   dispatch,
-  name,
-  value = '',
-  placeholder = 'input text',
   editable = false,
+  name,
   options,
+  placeholder = 'input text',
+  value = '',
 }) => {
   const onChange = e => {
     const {name, value} = e.currentTarget;
-    dispatch({name, value});
+    dispatch({[name]: value});
   };
 
   return (
     <div>
       {options && editable ? (
         <select
-          style={assign({}, darkBorder, $item, $select)}
-          size="1"
           name={name}
-          value={value}
           onChange={onChange}
+          size="1"
+          style={assign({}, darkBorder, $item, $select)}
+          value={value}
         >
           <option disabled>Choose {name}</option>
           {options.map(x => (<option key={x} value={x}>{x}</option>))}
         </select>
       ) : (
         <input
-          disabled={!editable}
           autoComplete={'off'}
+          disabled={!editable}
+          name={name}
+          onChange={onChange}
+          placeholder={placeholder}
           style={assign({}, $input, darkBorder, $item)}
           type={'text'}
-          name={name}
           value={value}
-          placeholder={placeholder}
-          onChange={onChange}
         />
       )}
     </div>

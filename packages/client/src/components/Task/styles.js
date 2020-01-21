@@ -1,15 +1,18 @@
 export const $container = {
-  display: 'flex',
   border: '2px solid blue',
+  display: 'flex',
+  justifyContent: 'space-between',
   margin: '3px',
   padding: '2px',
-  justifyContent: 'space-between',
 };
 export const $disabled = {
-  pointerEvents: 'none',
   opacity: 0.4,
+  pointerEvents: 'none',
 }
 export const $title = {
   userSelect: 'none',
   width: '60%',
+};
+export const $hidden = {
+  display: 'none',
 };

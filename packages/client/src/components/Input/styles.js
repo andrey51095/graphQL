@@ -1,33 +1,27 @@
-const concatPixels = array => {
-
-  return array.reduce((acc, val) => `${+acc.slice(0, -2) + +val.slice(0, -2)}px`);
-};
+import {concatPixels} from '../../utils';
 
 export const redBorder = {
   borderColor: 'red',
 };
-
 export const darkBorder = {
   borderColor: 'black',
 };
-
 export const $item = {
-  paddingTop: '3px',
-  paddingBottom: '3px',
-  paddingLeft: '3px',
-  paddingRight: '3px',
-  borderWidth: '2px',
   borderStyle: 'solid',
-  width: '150px',
-  marginTop: '3px',
+  borderWidth: '2px',
+  height: '20px',
   marginBottom: '3px',
   marginLeft: '3px',
   marginRight: '3px',
-  height: '20px',
+  marginTop: '3px',
+  paddingBottom: '3px',
+  paddingLeft: '3px',
+  paddingRight: '3px',
+  paddingTop: '3px',
+  width: '150px',
 }
 export const $input = {
 };
-
 export const $select = {
   padding: '2px',
   width: concatPixels([$item.width, [2, $item.padding], [2, $item.borderWidth]]),

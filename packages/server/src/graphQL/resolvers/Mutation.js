@@ -1,4 +1,3 @@
-
 const createTask = async (parent, args, context, info) => {
   const {title, description} = args;
   const {Task} = context.schemas;
@@ -13,7 +12,6 @@ const createTask = async (parent, args, context, info) => {
 
 const updateTask = async (parent, args, context, info) => {
   const {id, title, description, status} = args;
-  console.log('args: ', args);
   const {Task} = context.schemas;
 
   const answer = await Task.findOneAndUpdate({id},{

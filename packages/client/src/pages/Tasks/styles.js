@@ -1,6 +1,8 @@
 export const $blocks = {
   display: 'flex',
+  flexWrap: 'nowrap',
   margin: '5px',
   justifyContent: 'space-around',
-  width: '60vw',
+  alignContent: 'stretch',
+  height: '100%',
 }

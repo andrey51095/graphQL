@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
-
 import { ApolloProvider } from '@apollo/react-hooks';
-
 import ApolloClient from 'apollo-boost';
+
+import App from './components/App';
+
+import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient({
   uri: `http://localhost:${process.env.APP_SERVER_PORT || 8000}`,

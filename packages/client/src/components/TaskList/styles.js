@@ -1,13 +1,14 @@
 export const $container = {
-  backgroundColor: '#F8F5EC',
-  border: '4px solid black',
   display: 'flex',
-  flexBasis: '100%',
   flexDirection: 'column',
-  margin: '1%',
+};
+
+export const $containerLoading = {
+  opacity: 0.4,
+  pointerEvents: 'none',
 };
 
 export const $loading = {
-  opacity: 0.4,
-  pointerEvents: 'none',
+  display: 'flex',
+  justifyContent: 'center',
 };
