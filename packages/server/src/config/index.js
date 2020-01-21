@@ -9,7 +9,7 @@ const mongooseConfig = {
 }
 
 module.exports = {
-  APP_CLIENT_PORT: process.env.APP_CLIENT_PORT || 4000,
+  APP_CLIENT_PORT: process.env.APP_CLIENT_PORT,
   APP_SERVER_PORT: process.env.APP_SERVER_PORT || 8000,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_PORT,

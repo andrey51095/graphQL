@@ -46,3 +46,9 @@ When you specify environment variables run script from root folder:
 ```
 ./start.sh
 ```
+
+## Browsing
+
+- Project - [http://localhost:3000/](http://localhost:3000/) - PORT specify by 'APP_CLIENT_PORT' parameter
+
+- GraphQL playground - [http://localhost:8000/](http://localhost:8000/) - PORT specify by 'APP_SERVER_PORT' parameter
