@@ -22,11 +22,8 @@ const Block = ({status}) => {
     event.preventDefault();
     const id = event.dataTransfer.getData('task-id');
     const draggedStatus = event.dataTransfer.getData('task-status');
-    console.log('draggedStatus: ', draggedStatus);
-    console.log('status: ', status);
 
     if(draggedStatus !== status) {
-      console.log('=======')
       setStatus({variables: {id, status}});
       refetchTasks();
     }

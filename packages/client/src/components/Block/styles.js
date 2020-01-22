@@ -7,7 +7,6 @@ export const $container = {
   margin: '1%',
 };
 
-export const $loading = {
-  opacity: 0.4,
-  pointerEvents: 'none',
+export const $dragOvered = {
+  opacity: 0.7,
 };
