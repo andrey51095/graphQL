@@ -1,7 +1,17 @@
 import React from 'react';
+import classNames from 'classnames';
 
-const Button = ({title, clickEvent, ...rest}) => (
+import Style from './index.module.css';
+
+const Button = ({
+  title,
+  clickEvent,
+  size = 'small',
+  tagged = false,
+  ...rest
+}) => (
   <button
+    className={classNames(Style.button, Style[size], {[Style.tagged]: tagged})}
     onClick={clickEvent}
     {...rest}
   >
@@ -9,4 +19,4 @@ const Button = ({title, clickEvent, ...rest}) => (
   </button>
 );
 
-export default Button;
+export default React.memo(Button);
