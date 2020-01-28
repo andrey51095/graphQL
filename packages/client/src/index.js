@@ -2,10 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-
+import axe from 'react-axe';
 import App from './components/App';
+import 'reset-css';
 
 import * as serviceWorker from './serviceWorker';
+
+if (process.env.NODE_ENV !== 'production') {
+  axe(React, ReactDOM, 500);
+};
 
 const client = new ApolloClient({
   uri: `http://localhost:${process.env.APP_SERVER_PORT || 8000}`,
