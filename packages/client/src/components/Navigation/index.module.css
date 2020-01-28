@@ -1,0 +1,30 @@
+.container {
+  background-color: #373737;
+  display: flex;
+  flex-basis: 20%;
+  flex-direction: column;
+  margin: 0.5%;
+  padding: 0.5%;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #616161;
+  border: 1px solid gray;
+  font-size: 25px;
+  color: #ffffff;
+  padding: 10px 4px;
+  user-select: none;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0;
+}
+
+.title:hover {
+  cursor: pointer;
+}

@@ -3,20 +3,19 @@ import React from 'react';
 import Button from '../Button';
 import history, {mainUrl, createTask, tasksUrl} from '../../routing';
 
-import {$container, $title, $navigation} from './styles';
+import Style from './index.module.css';
 
 const Navigation = () => {
   const goToPage = e => history.push(e.currentTarget.name);
   return (
-    <div style={$container}>
-      <div style={$title}>Navigation</div>
-      <div style={$navigation}>
-        <Button title={'Main'} name={mainUrl} clickEvent={goToPage}/>
-        <Button title={'Tasks'} name={tasksUrl} clickEvent={goToPage}/>
-        <Button title={'Create task'} name={createTask} clickEvent={goToPage}/>
+    <div className={Style.container}>
+      <Button title={'Navigation'} name={mainUrl} tagged={true} size={'large'} clickEvent={goToPage}/>
+      <div className={Style.navigation}>
+        <Button title={'Tasks'} name={tasksUrl} size={'medium'} clickEvent={goToPage}/>
+        <Button title={'Create task'} name={createTask} size={'medium'} clickEvent={goToPage}/>
       </div>
     </div>
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);
