@@ -3,13 +3,13 @@ import React from 'react';
 import Navigation from '../Navigation';
 import Routing from '../Routing';
 
-import {$container} from './styles';
+import Style from './index.module.css';
 
 const  App = () => (
-  <div style={$container}>
+  <div className={Style.container}>
     <Navigation />
     <Routing />
   </div>
 );
 
-export default App;
+export default React.memo(App);
