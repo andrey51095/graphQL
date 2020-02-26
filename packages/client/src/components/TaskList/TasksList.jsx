@@ -1,17 +1,21 @@
 import React, {memo} from 'react';
-import assign from 'lodash/assign';
+import classNames from 'classnames';
 
-import Task from '../Task';
+import Ticket from '../Ticket/Ticket';
 
-import {$loading, $container, $containerLoading} from './styles';
+import Style from './index.module.css';
 
-const TasksList = ({loading, tasks = [], ...rest}) => (
+const TasksList = ({loading, tasks = [], ...rest}) => {
+  console.log('tasks: ', tasks);
+  return (
   <>
-    <div style={assign({}, $container, loading && $containerLoading)}>
-      {tasks.map(task => <Task key={task.id} task={task} draggable={true} {...rest}/>)}
+    <div className={classNames(Style.container, {[Style.containerLoading]: loading})}>
+      {tasks.map(task => <Ticket key={task.id} {...task} {...rest}/>)}
     </div>
-    {loading && <div style={$loading}>loading ...</div>}
+    {loading && <div className={classNames(Style.loading)}>loading ...</div>}
   </>
-);
+)};
 
 export default memo(TasksList);
+
+// <Task key={task.id} task={task} draggable={true} {...rest}/>

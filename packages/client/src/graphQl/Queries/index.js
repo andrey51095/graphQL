@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const QUERY_TASKS = gql`
   {
     tasks {
-      id
+      name
       title
       description
       createdAt
@@ -16,7 +16,7 @@ export const QUERY_TASKS = gql`
 export const QUERY_TASKS_TITLE = gql`
   {
     tasks {
-      id
+      name
       title
     }
   }
@@ -25,7 +25,7 @@ export const QUERY_TASKS_TITLE = gql`
 export const QUERY_TASKS_TITLE_BY_STATUS = gql`
 query TaskByStatus($status: String!){
     tasksByStatus(status: $status) {
-      id
+      name
       title
     }
   }
@@ -41,9 +41,9 @@ export const QUERY_TASKS_STATUSES = gql`
 `;
 
 export const QUERY_TASK = gql`
-  query Task($id: String!){
-    task(id: $id) {
-      id
+  query Task($name: String!){
+    task(name: $name) {
+      name
       title
       description
       createdAt

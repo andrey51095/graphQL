@@ -6,21 +6,23 @@ type Query {
 }
 
 type Mutation {
+  createBoard(name: String!): Board!
   createTask(
     description: String!
     title: String!
+    boardName: String!
   ): Task!
   updateTask(
     description: String!
-    id: String!
+    name: String!
     status: String!
     title: String!
   ): Task!
   deleteTask(
-    id: String!
+    name: String!
   ):Task!
   setTaskStatus(
-    id: String!
+    name: String!
     status: String!
   ):Task!
 }
@@ -28,10 +30,18 @@ type Mutation {
 type Task {
   createdAt: String!
   description: String!
-  id: ID!
+  name: ID!
   status: String!
   title: String!
   updatedAt: String!
+  rankBeforeId: String!
+  rankAfterId: String!
+}
+
+type Board {
+  name: String!
+  counter: String!
+  createdAt: String!
 }
 
 type TaskStatus {

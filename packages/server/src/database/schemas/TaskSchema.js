@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
 
-const {TASK_STATUSES} = require('../../constants');
+const {STATUSES} = require('../../constants');
 
 const Schema = mongoose.Schema;
 
 const schema = {
-  id: {
-    type: String,
-    default: shortid.generate
-  },
   title: String,
   description: String,
   createdAt: {
@@ -23,8 +18,14 @@ const schema = {
   status: {
     type: String,
     default: 'backlog',
-    enum: TASK_STATUSES.map(x => x.name),
-  }
+    enum: STATUSES,
+  },
+  name: String,
+  rankBeforeId: String,
+  rankAfterId: {
+    type: String,
+    default: null,
+  },
 };
 
 const taskSchema = new Schema(schema);

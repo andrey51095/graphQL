@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 
 import Input from '../../components/Input';
@@ -17,7 +17,7 @@ const CreateTask = () => {
 
   const addTask = () => {
     if (title && description) {
-      task({variables: {title, description}});
+      task({variables: {title, description, boardName: 'TT'}});
       dispatch({title: '', description: ''});
       redirect && history.push(tasksUrl);
     }

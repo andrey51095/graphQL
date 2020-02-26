@@ -1,0 +1,22 @@
+.info {
+  margin: 14px 0;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons>* {
+  margin: 0 6px;
+}
+
+.container {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.container>* {
+  flex-basis: 100%;
+}

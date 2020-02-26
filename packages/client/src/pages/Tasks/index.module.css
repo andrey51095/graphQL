@@ -1,0 +1,9 @@
+.blocks {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 5px;
+  justify-content: space-around;
+  align-content: stretch;
+  height: 100%;
+  flex: 1;
+}

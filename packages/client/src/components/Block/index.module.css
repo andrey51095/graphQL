@@ -1,0 +1,11 @@
+.container {
+  background-color: #8e8e8e;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+};
+
+.dragOvered {
+  opacity: 0.7;
+};

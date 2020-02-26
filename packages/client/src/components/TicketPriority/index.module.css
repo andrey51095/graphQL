@@ -1,0 +1,26 @@
+.status {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.lowest {
+  background-color: #81C784;
+}
+
+.low {
+  background-color: #FFEE58;
+}
+
+.medium {
+  background-color: #FFB74D;
+
+}
+
+.high {
+  background-color: #F57C00;
+}
+
+.highest {
+  background-color: #BF360C;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Route, Router } from 'react-router';
 
 import CreateTask from '../../pages/CreateTask';
@@ -14,7 +14,7 @@ const Routing = () => (
     <Router history={history}>
       <Route exact path={createTask} component={CreateTask}/>
       <Route exact path={mainUrl} component={Main}/>
-      <Route exact path={tasksUrl} component={Tasks}/>
+      <Route path={tasksUrl} component={Tasks}/>
       <Route path={taskUrl} component={TaskDescription}/>
     </Router>
   </Layout>

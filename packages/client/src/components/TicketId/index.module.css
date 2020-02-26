@@ -1,0 +1,17 @@
+.button {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font: inherit;
+  color: #CFD8DC;
+  outline: none;
+}
+
+.button:hover  {
+  text-decoration: underline;
+}
+
+.button:active {
+  color: #9EA7AA;
+}

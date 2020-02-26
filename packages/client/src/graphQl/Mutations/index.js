@@ -1,10 +1,11 @@
 import gql from 'graphql-tag'
 
 export const CREATE_TASK_MUTATION = gql`
-  mutation createTaskMutation($title: String!, $description: String!) {
+  mutation createTaskMutation($title: String!, $description: String!, $boardName: String!) {
     createTask(
       title: $title
       description: $description
+      boardName: $boardName
     ) {
       title
       description
@@ -13,43 +14,51 @@ export const CREATE_TASK_MUTATION = gql`
 `;
 
 export const DELETE_TASK_MUTATION = gql`
-  mutation deleteTaskMutation($id: String!) {
+  mutation deleteTaskMutation($name: String!) {
     deleteTask(
-      id: $id
+      name: $name
     ) {
-      id
+      name
     }
   }
 `;
 
 export const UPDATE_TASK_MUTATION = gql`
   mutation updateTaskMutation(
-    $id: String!
+    $name: String!
     $title: String!
     $status: String!
     $description: String!
     ) {
       updateTask(
-        id: $id
+        name: $name
         title: $title
         status: $status
         description: $description
       ) {
-        id
+        name
       }
     }
 `;
 
 export const SET_TASK_STATUS = gql`
   mutation setTaskStatus(
-    $id: String!
+    $name: String!
     $status: String!
   ) {
     setTaskStatus(
-      id: $id
+      name: $name
       status: $status
     ) {
-      id
+      name
     }
   }
 `;
+
+export const CREATE_BOARD = gql`
+  mutation createBoard(
+    $name: String!
+  ) {
+    createBoard(name: $name) {name}
+  }
+`

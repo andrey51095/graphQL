@@ -1,18 +1,22 @@
-import React from 'react';
+import * as React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import pick from 'lodash/pick';
+import classNames from 'classnames';
 
-import Input from '../../components/Input';
 import Button from '../../components/Button';
+import TextArea from '../../components/TextArea';
+import TaggedTextArea from '../../components/TaggedTextArea';
 
 import {QUERY_TASK, UPDATE_TASK_MUTATION, QUERY_TASKS_STATUSES} from '../../graphQl';
 
 import history from '../../routing';
 
+import Style from './index.module.css';
+
 const TaskDescription = () => {
-  const [{title, description, status, createdAt, updatedAt}, dispatch] = React.useReducer((state, {name, value}) => ({
+  const [{title, description, status, createdAt, updatedAt}, dispatch] = React.useReducer((state, action) => ({
     ...state,
-    [name]: value,
+    ...action,
   }), {});
   const [editable, setEditable] = React.useState(false);
 
@@ -27,18 +31,14 @@ const TaskDescription = () => {
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION, {onCompleted: () => refetch()});
 
   React.useEffect(() => {
-    Object.entries(pick(data.task, ['title', 'description', 'createdAt', 'updatedAt', 'status']) || {}).forEach(([name, value]) => dispatch({name, value}))
+    Object.entries(pick(data.task, ['title', 'description', 'createdAt', 'updatedAt', 'status']) || {}).forEach(([name, value]) => dispatch({[name]: value}))
   }, [data]);
 
   if (loading || statuses.loading) {return (<div>Loading ...</div>)}
   if (error || statuses.error) {return (<div>Error!</div>)}
 
-  const saveTask = () => {
+  const refetchTask = () => {
     updateTask({variables: {id: history.location.search.slice(1), status, description, title}});
-    setEditable(false);
-  }
-
-  const cancelSave = () => {
     setEditable(false);
   }
 
@@ -47,36 +47,44 @@ const TaskDescription = () => {
   }
 
   return (
-    <div>
-      TaskDescription
-      <div>
-        <Input
+    <div className={classNames(Style.container)}>
+      <TextArea
+        value={'Task Description'}
+        align={'center'}
+        size={10}
+      />
+      <div
+        className={classNames(Style.info)}
+      >
+        <TaggedTextArea
           value={title}
           name={'title'}
           dispatch={dispatch}
           editable={editable}
         />
-        <Input
+        <TaggedTextArea
           value={description}
           name={'description'}
           dispatch={dispatch}
           editable={editable}
         />
-        <Input
+        <TaggedTextArea
           value={status}
           name={'status'}
           dispatch={dispatch}
           editable={editable}
         />
-        <Input value={createdAt} />
-        <Input value={updatedAt} />
+        <TaggedTextArea value={createdAt} name={'createdAt'} />
+        <TaggedTextArea value={updatedAt} name={'updatedAt'}/>
       </div>
-      {editable
-        ? <>
-            <Button title={'Save'} clickEvent={saveTask}/>
-            <Button title={'Cancel'} clickEvent={cancelSave}/>
-          </>
-        :<Button title={'Edit'} clickEvent={editTask}/>}
+      <div className={classNames(Style.buttons)}>
+        {editable
+          ? <>
+              <Button title={'Save'} clickEvent={refetchTask} size={'medium'}/>
+              <Button title={'Cancel'} clickEvent={refetchTask} size={'medium'}/>
+            </>
+          :<Button title={'Edit'} clickEvent={editTask} size={'medium'}/>}
+      </div>
     </div>
   );
 };

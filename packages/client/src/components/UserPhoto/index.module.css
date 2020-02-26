@@ -1,0 +1,16 @@
+.userPhoto {
+  display: flex;
+  pointer-events: none;
+}
+
+.small {
+  height: 25px;
+}
+
+.medium {
+  height: 60px;
+}
+
+.large {
+  height: 140px;
+}

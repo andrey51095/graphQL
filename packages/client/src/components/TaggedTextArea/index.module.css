@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.container :first-child {
+  flex: 1 1 15%;
+}
+
+.container :last-child {
+  flex: 10 1 100%;
+}
